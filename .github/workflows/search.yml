@@ -1,0 +1,24 @@
+name: ID Search
+on:
+  workflow_dispatch:
+    inputs:
+      search_id:
+        description: 'Type the ID to find'
+        required: true
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get all files
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tools
+        run: pip install pandas openpyxl
+
+      - name: Run search
+        run: python search.py "${{ github.event.inputs.search_id }}"
